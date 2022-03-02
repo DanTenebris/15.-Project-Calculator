@@ -1,0 +1,113 @@
+@media (orientation: portrait) {
+  button {
+    font-size: 2em;
+  }
+  textarea,
+   ::placeholder {
+    font-size: 85px;
+  }
+}
+
+@media (orientation: landscape) {
+  button,
+  textarea {
+    font-size: 1.5em;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: rgb(42, 76, 97);
+  display: grid;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+main {
+  width: 95vw;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  display: grid;
+  grid-gap: 15px;
+  grid-template-rows: 1fr 4fr;
+}
+
+button {
+  /* height: 90px; */
+  color: rgb(255, 228, 228);
+  background-color: rgb(15, 8, 58);
+  border: none;
+  display: inline-block;
+  border-radius: 12px;
+  font-weight: bold;
+}
+
+textarea {
+  width: 100%;
+  text-align: end;
+  /* vertical-align: bottom; */
+  /* height: 100px; */
+  box-sizing: border-box;
+  border: 2px solid rgb(136, 136, 136);
+  border-radius: 4px;
+  color: aliceblue;
+  background-color: #3d0049;
+}
+
+::placeholder {
+  color: aliceblue;
+}
+
+.buttons {
+  display: grid;
+  grid-gap: 5px;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.buttons button:active {
+  animation-name: aniButton;
+  animation-duration: 100ms;
+}
+
+.operator {
+  grid-column: 4;
+  grid-row: 1/ span 5;
+  display: grid;
+  grid-gap: 5px;
+}
+
+@keyframes aniButton {
+  50% {
+    background-color: rgb(11, 1, 17);
+  }
+}
+
+.operator>button {
+  background-color: rgb(66, 3, 124);
+}
+
+.clear,
+.clearEntry {
+  background-color: rgb(40, 0, 77);
+}
+
+.clearEntry {
+  grid-column: 2/ span 2;
+}
+
+.zero {
+  grid-column: 1/ span 2;
+}
+
+.hiddenElement {
+  position: absolute;
+  left: -10000px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
