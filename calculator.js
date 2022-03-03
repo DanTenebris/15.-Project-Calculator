@@ -1,106 +1,131 @@
-/* const operation = prompt('Write a math problem using only two numbers.', 0);
-const numbers = operation.match(/(\d[\d\.]*)/g);
-const operator = operation.match(/(\+|\-|\/|\*)/g);
-console.log(numbers, operator);
-
-if (checkValuesNumbers(numbers, operator)) {
-  operate(operator);
-} else {
-  console.log('error');
-} */
-
 const buttonPoint = document.querySelector("#point");
 
 const textarea = document.querySelector('textarea');
-textarea.textContent = '';
 
 const buttons = document.querySelectorAll('button');
+
 buttons.forEach((button) => {
-  button.addEventListener('click', () => {
-    //console.log({ button });
-    //console.log(button.className);
-
-    let numbers = (textarea.textContent.match(/(\d[\d\.]*)/g) || 0);
-    let operator = textarea.textContent.match(/(\+|\-|\/|[x])/g);
-
-
-    switch (button.innerText) {
-      case '+':
-      case '-':
-        if ((textarea.textContent.length === 1) &&
-          ((textarea.textContent === '+') || (textarea.textContent === '-'))) {
-          break;
-        } else if (textarea.textContent.length === 0) {
-          textarea.textContent += button.innerText;
-          break;
-        }
-      case '=':
-      case 'x':
-      case '/':
-        if (textarea.textContent.length === 0) {
-          break;
-        }
-
-        if (buttonPoint.disabled === true) {
-          buttonPoint.disabled = false;
-        }
-
-        if (checkValueQuantity(numbers, operator)) {
-          textarea.textContent = operate(operator, numbers);
-        }
-        textarea.textContent += (button.innerText !== '=') ? button.innerText : '';
-        break;
-
-      case 'Clear':
-        textarea.textContent = textarea.textContent.slice(0, (textarea.textContent.length - 1));
-        break;
-
-      case 'Clear Entry':
-        textarea.textContent = '';
-        break;
-
-      case '.':
-        buttonPoint.disabled = true;
-        textarea.textContent += button.innerText;
-        break;
-
-      default:
-        textarea.textContent += button.innerText;
-        break;
-    }
-
-  });
+  button.addEventListener('click', () => textAreaInput(button.innerText));
 });
 
+document.addEventListener('keydown', e => textAreaInput(e.key));
 
-function operate(operator, numbers) {
-  switch (operator.join('')) {
-    case '+':
-      return add(numbers[0], numbers[1]);
-      break;
-    case '-':
-      return subtract(numbers[0], numbers[1]);
-      break;
-    case "x":
-      return multiply(numbers[0], numbers[1]);
-      break;
-    case '/':
-      return divide(numbers[0], numbers[1]);
-      break;
+function textAreaInput(dataInput = false) {
+  if (dataInput) {
 
-    default:
-      return;
-      break;
+    if (dataInput === '*') {
+      dataInput = 'x';
+    }
+
+    if (dataInput === 'Enter') {
+      dataInput = '=';
+    }
+
+    //I had to remove the "g" flag because it doesn't work properly with the "test" method.
+    let patternTest = /(\+|\-|\/|[x]|Clear|Backspace|=|\.|\d[\d\.]*)/;
+
+    if (patternTest.test(dataInput)) {
+      switch (dataInput) {
+        case '+':
+        case '-':
+        case '=':
+        case 'x':
+        case '/':
+          if (buttonPoint.disabled === true) {
+            buttonPoint.disabled = false;
+          }
+
+          const pattern = /(\+|\-|\/|[x]|\d[\d\.]*)/g;
+          const textAreaSeparated = (textarea.value.match(pattern) || 0);
+          const textAreaLength = textAreaSeparated.length - 1;
+
+          if ((textAreaSeparated.length >= 3) && (textAreaSeparated.length <= 5) &&
+            (textAreaSeparated[textAreaLength] !== '+') &&
+            (textAreaSeparated[textAreaLength] !== '-') &&
+            (textAreaSeparated[textAreaLength] !== 'x') &&
+            (textAreaSeparated[textAreaLength] !== '/')) {
+            const result = operate(getNumbersAndOperator(textarea.value));
+            textarea.value = isNaN(result) ? 'Undefined' : result;
+          }
+
+          if (textarea.value.length < 10) {
+            textarea.value += (dataInput !== '=') ? dataInput : '';
+          }
+          break;
+
+        case 'Backspace':
+          textarea.value = textarea.value.slice(0, (textarea.value.length - 1));
+          break;
+
+        case 'Clear':
+          textarea.value = '';
+          break;
+
+        case '.':
+          if (buttonPoint.disabled) {
+            break;
+          }
+          buttonPoint.disabled = true;
+        default:
+          if (textarea.value.length < 10) {
+            textarea.value += dataInput;
+          }
+          break;
+      }
+    }
   }
 }
 
-function checkValueQuantity(num, operatorValue) {
-  if (!(num.length === 2) || !(operatorValue.length === 1)) {
-    //return location.reload();
-    //window.top.location = window.top.location;
-    return false;
-  } else {
-    return true;
+function getNumbersAndOperator(stringValue) {
+  const pattern = /(\+|\-|\/|[x]|\d[\d\.]*)/g;
+  const patternNumbers = /(\d[\d\.]*)/g;
+
+  const separationArray = stringValue.match(pattern);
+  const separationNumbers = stringValue.match(patternNumbers);
+
+  let resultA = [];
+  let separatedOperator = '';
+  let resultB = [];
+
+  let resultTotal = [];
+
+  for (let i = 0; i < separationArray.length; i++) {
+    if (separationArray[i] === separationNumbers[0]) {
+      for (let j = 0; j <= i; j++) {
+        resultA[j] = separationArray[j];
+      }
+
+      i++;
+      separatedOperator = separationArray[i];
+
+      i++;
+      let countB = 0;
+      for (i; i < separationArray.length; i++) {
+        resultB[countB] = separationArray[i];
+        countB++;
+      }
+      break;
+    }
+  }
+
+  resultTotal = [resultA.join(''), separatedOperator, resultB.join('')];
+  return resultTotal;
+}
+
+
+function operate(arrayParts) {
+  switch (arrayParts[1]) {
+    case '+':
+      return add(arrayParts[0], arrayParts[2]);
+    case '-':
+      return subtract(arrayParts[0], arrayParts[2]);
+    case "x":
+      return multiply(arrayParts[0], arrayParts[2]);
+    case '/':
+      return divide(arrayParts[0], arrayParts[2]);
+
+    default:
+      return;
   }
 }
 

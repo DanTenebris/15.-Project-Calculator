@@ -1,113 +1,136 @@
-@media (orientation: portrait) {
+  @media (orientation: portrait) {
+    button {
+      font-size: 2.3em;
+    }
+    textarea,
+     ::placeholder {
+      font-size: 85px;
+    }
+    main {
+      width: 95vw;
+      height: 95.5vh;
+      margin: 15px;
+    }
+  }
+  
+  @media (orientation: landscape) and (max-height: 700px) {
+    button {
+      font-size: 2.5em;
+    }
+    textarea {
+      font-size: 5em;
+    }
+    main {
+      width: 95vw;
+      height: 95.5vh;
+      margin: 15px;
+    }
+  }
+  
+  @media (orientation: landscape) and (min-height: 701px) {
+    button {
+      font-size: 2.5em;
+    }
+    textarea {
+      font-size: 5em;
+    }
+    main {
+      width: 45vw;
+      height: 95.5vh;
+      margin-top: 15px;
+      margin-bottom: 15px;
+    }
+  }
+  
+  body {
+    background: radial-gradient(circle, rgb(189, 122, 202) 0%, rgb(66, 19, 110) 72%);
+    display: grid;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+  }
+  
+  main {
+    display: grid;
+    grid-gap: 15px;
+    grid-template-rows: 1fr 4fr;
+  }
+  
   button {
-    font-size: 2em;
+    color: rgb(255, 228, 228);
+    background-color: rgb(15, 8, 58);
+    border: none;
+    display: inline-block;
+    border-radius: 12px;
+    font-weight: bold;
   }
-  textarea,
-   ::placeholder {
-    font-size: 85px;
-  }
-}
-
-@media (orientation: landscape) {
-  button,
+  
   textarea {
-    font-size: 1.5em;
+    width: 100%;
+    text-align: end;
+    box-sizing: border-box;
+    border-radius: 4px;
+    color: aliceblue;
+    background-color: #3d0049;
   }
-}
-
-* {
-  box-sizing: border-box;
-}
-
-body {
-  background-color: rgb(42, 76, 97);
-  display: grid;
-  justify-content: center;
-  width: 100vw;
-  height: 100vh;
-}
-
-main {
-  width: 95vw;
-  margin-top: 15px;
-  margin-bottom: 15px;
-  display: grid;
-  grid-gap: 15px;
-  grid-template-rows: 1fr 4fr;
-}
-
-button {
-  /* height: 90px; */
-  color: rgb(255, 228, 228);
-  background-color: rgb(15, 8, 58);
-  border: none;
-  display: inline-block;
-  border-radius: 12px;
-  font-weight: bold;
-}
-
-textarea {
-  width: 100%;
-  text-align: end;
-  /* vertical-align: bottom; */
-  /* height: 100px; */
-  box-sizing: border-box;
-  border: 2px solid rgb(136, 136, 136);
-  border-radius: 4px;
-  color: aliceblue;
-  background-color: #3d0049;
-}
-
-::placeholder {
-  color: aliceblue;
-}
-
-.buttons {
-  display: grid;
-  grid-gap: 5px;
-  grid-template-columns: repeat(4, 1fr);
-}
-
-.buttons button:active {
-  animation-name: aniButton;
-  animation-duration: 100ms;
-}
-
-.operator {
-  grid-column: 4;
-  grid-row: 1/ span 5;
-  display: grid;
-  grid-gap: 5px;
-}
-
-@keyframes aniButton {
-  50% {
-    background-color: rgb(11, 1, 17);
+  
+   ::placeholder {
+    color: aliceblue;
   }
-}
-
-.operator>button {
-  background-color: rgb(66, 3, 124);
-}
-
-.clear,
-.clearEntry {
-  background-color: rgb(40, 0, 77);
-}
-
-.clearEntry {
-  grid-column: 2/ span 2;
-}
-
-.zero {
-  grid-column: 1/ span 2;
-}
-
-.hiddenElement {
-  position: absolute;
-  left: -10000px;
-  top: auto;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-}
+  
+  .buttons {
+    display: grid;
+    grid-gap: 5px;
+    grid-template-columns: repeat(4, 1fr);
+  }
+  
+  .buttons button,
+  textarea {
+    box-shadow: 0px 0px 5px 2px rgb(155, 88, 168);
+    word-wrap: break-word;
+  }
+  
+  .buttons button:active {
+    animation-name: aniButton;
+    animation-duration: 100ms;
+    transform: scale(0.9);
+  }
+  
+  .operator {
+    grid-column: 4;
+    grid-row: 1/ span 5;
+    display: grid;
+    grid-gap: 5px;
+  }
+  
+  @keyframes aniButton {
+    50% {
+      background-color: rgb(14, 4, 19);
+    }
+  }
+  
+  .operator>button {
+    background-color: rgb(66, 3, 124);
+  }
+  
+  .clear,
+  .backspace {
+    background-color: rgb(40, 0, 77);
+  }
+  
+  .backspace {
+    grid-column: 2/ span 2;
+  }
+  
+  .zero {
+    grid-column: 1/ span 2;
+  }
+  
+  .hiddenElement {
+    position: absolute;
+    left: -5000px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }

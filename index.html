@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=0.86, maximum-scale=5.0, minimum-scale=0.86">
-  <title>13. Project Etch a Sketch</title>
+  <title>15. Calculator</title>
   <link rel="stylesheet" href="reset.css">
   <link rel="stylesheet" href="calculator.css">
   <script src="calculator.js" defer></script>
@@ -15,11 +15,11 @@
     <label class="hiddenElement" for="search">
       Write a basic math problem using only two numbers.
     </label>
-    <textarea type="text" name="search" id="search" readonly='readonly' placeholder="0"></textarea>
+    <textarea type="number" name="search" id="search" placeholder="0" maxlength="7" readonly></textarea>
 
     <div class="buttons">
       <button class="clear">Clear</button>
-      <button class="clearEntry">Clear Entry</button>
+      <button class="backspace">Backspace</button>
 
       <button>7</button>
       <button>8</button>
@@ -38,7 +38,7 @@
         <button>x</button>
         <button>-</button>
         <button>+</button>
-        <button class="equals">=</button>
+        <button>=</button>
       </div>
     </div>
   </main>
